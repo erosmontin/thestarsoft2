@@ -26,7 +26,7 @@ ENV JULIA_DEPOT_PATH ${TASK_ROOT}/packages
 ENV JULIA_CPU_TARGET="generic;Haswell;clone_all"
 
 # Install Julia packages
-RUN julia -e 'using Pkg;Pkg.add(["MAT","NIfTI","LsqFit","Statistics","Plots","NaturalSort"])'
+RUN julia -e 'using Pkg;Pkg.add(["MAT","NIfTI","LsqFit","Statistics","Plots","NaturalSort","Glob"])'
 # Copy the current directory contents into the container at /app
 
 # Copy the requirements.txt file into the container
@@ -35,6 +35,7 @@ RUN apt-get install -y dcm2niix
 COPY . /app
 
 
+COPY ./OAI_DataProcessing/* /app/
 # Install dcm2nii
 
 # Install any needed packages specified in requirements.txt

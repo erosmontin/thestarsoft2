@@ -52,9 +52,13 @@ filedir = sort(filedir, lt=natural)
 ## Concatenate T2 images
 catfiles = Vector{Array{T, 3}}(undef, 7)
 ni_header = []
-global i = 1
+i = 1
+println("Reading files...")
+
 for file in filedir
+    
     if occursin(".nii", file) && !occursin("._", file)
+        
         catfiles[i] = collect(niread(joinpath(datadir,file)))
         ni_header = niread(joinpath(datadir,file), mmap=true)
         ni_header = ni_header.header
