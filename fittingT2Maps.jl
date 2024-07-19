@@ -23,16 +23,25 @@ if length(ARGS) < 2
     exit(1)
 end
 
-# Use the first command-line argument as the file path
-filepath = ARGS[1]
 
-db = matread(filepath)
+# Check if a command-line argument was provided
+if length(ARGS) < 3
+    println("Please provide the nifit dir, db and mapdir.")
+    exit(1)
+end
 
 # Use the first command-line argument as the data directory
 datadir = ARGS[1]
 
+
+# Use the second command-line argument as the file path
+filepath = ARGS[2]
+
+db = matread(filepath)
+
+
 ## Create output folders
-mapdir = joinpath(datadir, "Maps")
+mapdir = ARGS[3]
 if !isdir(mapdir)
     mkdir(mapdir)
 end
@@ -43,7 +52,7 @@ filedir = sort(filedir, lt=natural)
 ## Concatenate T2 images
 catfiles = Vector{Array{T, 3}}(undef, 7)
 ni_header = []
-i = 1
+global i = 1
 for file in filedir
     if occursin(".nii", file) && !occursin("._", file)
         catfiles[i] = collect(niread(joinpath(datadir,file)))

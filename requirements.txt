@@ -1,2 +1,2 @@
-git+https://github.com/erosmontin/cmrawspy
 git+https://github.com/erosmontin/pynico
+git+https://github.com/erosmontin/oai_package

@@ -6,12 +6,6 @@ WORKDIR /app
 
 # Set the environment variable
 ENV TASK_ROOT /app
-
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-
-
 # Install Julia and Git
 RUN apt-get update && \
     apt-get install -y wget git tar && \
@@ -33,10 +27,17 @@ ENV JULIA_CPU_TARGET="generic;Haswell;clone_all"
 
 # Install Julia packages
 RUN julia -e 'using Pkg;Pkg.add(["MAT","NIfTI","LsqFit","Statistics","Plots","NaturalSort"])'
+# Copy the current directory contents into the container at /app
 
 # Copy the requirements.txt file into the container
-COPY requirements.txt .
+RUN apt-get install -y dcm2niix
+
+COPY . /app
+
+
+# Install dcm2nii
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# RUN pip install --no-cache-dir -r requirements.txt
 
+ENTRYPOINT [ "bash", "script.sh" ]
