@@ -33,12 +33,17 @@ RUN julia -e 'using Pkg;Pkg.add(["MAT","NIfTI","LsqFit","Statistics","Plots","Na
 RUN apt-get install -y dcm2niix
 
 COPY . /app
+# Copy the requirements.txt file into the container
+COPY requirements.txt /app/requirements.txt
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 
 COPY ./OAI_DataProcessing/* /app/
-# Install dcm2nii
+
 
 # Install any needed packages specified in requirements.txt
-# RUN pip install --no-cache-dir -r requirements.txt
+
 
 ENTRYPOINT [ "bash", "script.sh" ]

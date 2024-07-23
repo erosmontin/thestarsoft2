@@ -1,5 +1,5 @@
 # The stars of t2
-
+Contenerized version of the t2 map script in
 
 ## OAI Data
 Ozkan CigDem Ph.D.
