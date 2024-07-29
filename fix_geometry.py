@@ -36,4 +36,4 @@ if __name__ == '__main__':
     for s in S.getFilesInPathByExtension():
         fixrois(F[-1],s,s)
         
-    shutil.copyfile(F[-1],source_destination+'Echo.nii')
+    # shutil.copyfile(F[-1],source_destination+'Echo.nii')
