@@ -56,7 +56,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
         # fi
         # '''
 
-        cmd = f'''singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti -B {DB}:/db -B {APP}:/app docker://erosmontin/thestarsoft2:latest /bin/bash -c "cd /app && bash /app/script.sh VA23_Knee_7ETL_10TE.mat"'''
+        cmd = f'''singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti -B {DB}:/db -B {APP}:/app docker://erosmontin/thestarsoft2:latest /bin/bash -c "cd /app && bash script.sh VA23_Knee_7ETL_10TE.mat"'''
 
         job = f'{JOB_DIR}/job_{PID}_{SERIES}'
         # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
@@ -68,7 +68,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
 # Example usage
 file_path = 'Book1.csv'
 DB = '/gpfs/home/montie01/PROJECTS/OAI/'
-APP = '/gpfs/home/montie01/PROJECTS/T2/APP'
+APP = '/gpfs/home/montie01/tmp/app'
 JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
 OUTDIR = '/gpfs/home/montie01/PROJECTS/T2/OUTDIR'
 JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR)
