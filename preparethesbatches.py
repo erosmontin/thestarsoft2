@@ -29,7 +29,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR):
     MODULES = ['singularity/3.9.8']
     JOBLIST = []
     FN = len(df)
-    FN = 2  # This seems to limit the loop to one iteration; adjust as needed
+    FN = 2 
     
     for a in range(0, FN):
         p = df.iloc[a]
