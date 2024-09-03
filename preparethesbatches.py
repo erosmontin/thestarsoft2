@@ -63,7 +63,9 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
 
         cmd = f'''
         singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti \
-        docker://erosmontin/thestarsoft2:singularity /bin/bash -c "echo $PWD && cd /app && bash script.sh VA23_Knee_7ETL_10TE.mat"
+                         -B /gpfs/home/montie01/tmp/app:/app \
+                 docker://erosmontin/thestarsoft2:latest \
+                 /bin/bash -c "echo \$PWD && cd /app && bash script.sh VA23_Knee_7ETL_10TE.mat"
         '''
         job = f'{JOB_DIR}/job_{PID}_{SERIES}'
         # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
