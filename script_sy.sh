@@ -14,7 +14,6 @@ mv /tmp/dicom/*.nii /tmp/NIFTI/
 mv /tmp/dicom/*.json /tmp/NIFTI/
 echo "Running Julia script"
 cd $PT
-# Call the Julia script
 julia /app/fittingT2Maps.jl /tmp/NIFTI/ /app/db/VA23_Knee_7ETL_10TE /nifti/
 echo "Fixing geometry"
 python fix_geometry.py /tmp/NIFTI/ /nifti/
