@@ -48,7 +48,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
         # os.makedirs(OUTDIR, exist_ok=True)
         app=APP+'/'+NAME
         # os.makedirs(app, exist_ok=True)
-
+        tmp=TMP+'/'+NAME
         
         # Command to check files and run Singularity
         # cmd = f'''
@@ -65,8 +65,10 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
         mkdir -p -m 0775 {OUTDIR}
         singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti \
                 -B {DB}:/db -B {APP}:/app \
+                -B {tmp}:/tmp \
                 docker://erosmontin/thestarsoft2:latest \
                 /bin/bash -c "echo \$PWD && cd /app && bash script.sh VA23_Knee_7ETL_10TE.mat"
+        rm -rf {tmp}
         '''
         job = f'{JOB_DIR}/job_{PID}_{SERIES}'
         # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
@@ -81,7 +83,8 @@ DB = '/gpfs/home/montie01/PROJECTS/OAI/'
 APP = '/gpfs/home/montie01/tmp/app'
 JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
 OUTDIR = '/gpfs/home/montie01/PROJECTS/T2/OUTDIR'
-JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR)
+TMP='/gpfs/home/montie01/PROJECTS/T2/_TMP'
+JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR,tmpdir=TMP)
 
 for job in JOBLIST:
     os.system(f'sbatch {job}')
