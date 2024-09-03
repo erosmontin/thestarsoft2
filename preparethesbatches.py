@@ -14,8 +14,9 @@ def makeSlurm(jobName, job,partition='cpu_short', time='cpu_long', nodes='1', nt
     slurm.write('#SBATCH --ntasks=' + ntasks + '\n')
     slurm.write('#SBATCH --cpus-per-task=' + cpus + '\n')
     slurm.write('#SBATCH --mem=' + mem + '\n')
-    for module in modules:
-        slurm.write(f'module load {module}\n')
+    if len(modules) > 0:
+        for module in modules:
+            slurm.write(f'module load {module}\n')
     slurm.write(f'{job}\n')
     slurm.close()
     return FN
