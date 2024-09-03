@@ -28,8 +28,6 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR):
         raise ValueError("Unsupported file extension. Only .xlsx and .csv are supported.")
 
 
-    df = pd.read_excel(file_path)
-    
     # Ensure directories exist
     os.makedirs(APP, exist_ok=True)
     os.makedirs(JOB_DIR, exist_ok=True)
