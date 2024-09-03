@@ -1,0 +1,46 @@
+# Singularity Definition File
+
+Bootstrap: docker
+From: python:3.10-slim-buster
+
+%environment
+    export TASK_ROOT=/app
+    export JULIA_DEPOT_PATH=${TASK_ROOT}/packages
+    export JULIA_CPU_TARGET="generic;native;core2;nehalem;sandybridge;ivybridge;haswell;skylake;skylake-avx512;znver1;znver2;znver3"
+
+%post
+    # Set the working directory
+    mkdir -p /app
+    cd /app
+    
+    # Update the package list and install dependencies
+    apt-get update && \
+    apt-get install -y wget git tar dcm2niix
+    
+    # Install Julia
+    wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.0-linux-x86_64.tar.gz && \
+    tar xzf julia-1.9.0-linux-x86_64.tar.gz -C /usr --strip-components 1 && \
+    rm -rf julia-1.9.0-linux-x86_64.tar.gz
+    
+    # Create the JULIA_DEPOT_PATH directory
+    mkdir -p ${TASK_ROOT}/packages
+    
+    # Set permissions for the JULIA_DEPOT_PATH directory
+    chmod -R 777 ${TASK_ROOT}/
+    
+    # Install Julia packages
+    julia -e 'using Pkg; Pkg.add(["MAT", "NIfTI", "LsqFit", "Statistics", "Plots", "NaturalSort", "Glob"]); Pkg.precompile()'
+    # Copy the contents into the container at /app
+    cp -r OAI_DataProcessing/* /app/
+    
+    # Install Python packages from requirements.txt
+    pip install --no-cache-dir -r /app/requirements.txt
+
+%files
+    # Copy necessary files
+    ./OAI_DataProcessing/* /app/
+    requirements.txt /app/requirements.txt
+
+%runscript
+    # Command to run when the container is started
+    exec bash script.sh
