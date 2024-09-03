@@ -20,7 +20,7 @@ def makeSlurm(jobName, job,partition='cpu_short', time='cpu_long', nodes='1', nt
     slurm.close()
     return FN
 
-def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
+def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir):
     file_extension = os.path.splitext(file_path)[1]
     if file_extension == '.xlsx':
         df = pd.read_excel(file_path)
@@ -48,7 +48,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
         # os.makedirs(OUTDIR, exist_ok=True)
         app=APP+'/'+NAME
         # os.makedirs(app, exist_ok=True)
-        tmp=TMP+'/'+NAME
+        tmp=tmpdir+'/'+NAME
         
         # Command to check files and run Singularity
         # cmd = f'''
