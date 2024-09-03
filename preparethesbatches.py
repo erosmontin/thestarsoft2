@@ -62,9 +62,11 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir):
         # cmd = f'''singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti -B {DB}:/db -B {app}:/app docker://erosmontin/thestarsoft2:latest /bin/bash -c "cd /app && bash script.sh VA23_Knee_7ETL_10TE.mat"'''
 
         cmd = f'''
-        mkdir -p -m 0775 {OUTDIR}
+        mkdir -p -m 0777 {OUTDIR}
+        mkdir -p -m 0777 {tmp}
+        mkdir -p -m 0777 {app}
         singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti \
-                -B {DB}:/db -B {APP}:/app \
+                -B {DB}:/db -B {app}:/app \
                 -B {tmp}:/tmp \
                 docker://erosmontin/thestarsoft2:latest \
                 /bin/bash -c "echo \$PWD && cd /app && bash script.sh VA23_Knee_7ETL_10TE.mat"
