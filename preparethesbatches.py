@@ -42,7 +42,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
     for a in range(0, FN):
         p = df.iloc[a]
         # Specify the path to the output directory
-        OUTDIR = f'{outdir}/00m/{p["ParticipantID"]}/'
+        OUTDIR = f'{outdir}/00m/{p["ParticipantID"]}{p['SeriesDescription']}/'
         os.makedirs(OUTDIR, exist_ok=True)
         
         # Command to check files and run Singularity
@@ -54,7 +54,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
         fi
         '''
         
-        job = f'{JOB_DIR}/job_{p["ParticipantID"]}'
+        job = f'{JOB_DIR}/job_{p["ParticipantID"]}_{p['SeriesDescription']}'
         # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
         fn=makeSlurm(f'{job}', cmd, partition='cpu_short', modules=MODULES, time='02:00:00')
         JOBLIST.append(fn)
