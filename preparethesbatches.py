@@ -55,8 +55,8 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR):
 # Example usage
 file_path = 'Book1.xlsx'
 DB = '/gpfs/home/montie01/PROJECTS/OAI/'
-APP = '/gpfs/home/montie01/tmp/app'
-JOB_DIR = '/gpfs/home/montie01/tmp/jobs'
+APP = '/gpfs/home/montie01/PROJECTS/T2/APP'
+JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
 
 JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR)
 
