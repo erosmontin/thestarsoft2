@@ -19,7 +19,15 @@ def makeSlurm(jobName, job, partition='cpu_short', time='cpu_long', nodes='1', n
     slurm.close()
 
 def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR):
-    # Read the .xlsx file
+    file_extension = os.path.splitext(file_path)[1]
+    if file_extension == '.xlsx':
+        df = pd.read_excel(file_path)
+    elif file_extension == '.csv':
+        df = pd.read_csv(file_path)
+    else:
+        raise ValueError("Unsupported file extension. Only .xlsx and .csv are supported.")
+
+
     df = pd.read_excel(file_path)
     
     # Ensure directories exist
@@ -53,7 +61,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR):
     return JOBLIST
 
 # Example usage
-file_path = 'Book1.xlsx'
+file_path = 'Book1.csv'
 DB = '/gpfs/home/montie01/PROJECTS/OAI/'
 APP = '/gpfs/home/montie01/PROJECTS/T2/APP'
 JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
