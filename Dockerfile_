@@ -40,7 +40,7 @@ COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 
-COPY ./OAI_DataProcessing/* /app/
+COPY OAI_DataProcessing/* /app/
 
 RUN chmod -R 777 ${TASK_ROOT}/
 # Install any needed packages specified in requirements.txt
