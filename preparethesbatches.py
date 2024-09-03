@@ -18,7 +18,7 @@ def makeSlurm(jobName, job, partition='cpu_short', time='cpu_long', nodes='1', n
     slurm.write(f'{job}\n')
     slurm.close()
 
-def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR):
+def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
     file_extension = os.path.splitext(file_path)[1]
     if file_extension == '.xlsx':
         df = pd.read_excel(file_path)
@@ -40,7 +40,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR):
     for a in range(0, FN):
         p = df.iloc[a]
         # Specify the path to the output directory
-        OUTDIR = f'/gpfs/data/denizlab/Datasets/OAI/T2/00m/{p["ParticipantID"]}/'
+        OUTDIR = f'{outdir}/00m/{p["ParticipantID"]}/'
         os.makedirs(OUTDIR, exist_ok=True)
         
         # Command to check files and run Singularity
@@ -63,8 +63,8 @@ file_path = 'Book1.csv'
 DB = '/gpfs/home/montie01/PROJECTS/OAI/'
 APP = '/gpfs/home/montie01/PROJECTS/T2/APP'
 JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
-
-JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR)
+OUTDIR = '/gpfs/home/montie01/PROJECTS/T2/OUTDIR'
+JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR)
 
 for job in JOBLIST:
     os.system(f'sbatch {job}')
