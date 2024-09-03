@@ -50,6 +50,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir):
         app=APP+'/'+NAME
         # os.makedirs(app, exist_ok=True)
         tmp=tmpdir+'/'+NAME
+        os.makedirs(tmp, exist_ok=True,mode=0o775)
         
         # Command to check files and run Singularity
         # cmd = f'''
