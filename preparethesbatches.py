@@ -43,7 +43,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
         # Specify the path to the output directory
         SERIES = p['SeriesDescription']
         PID=p['ParticipantID']
-        NAME=PID+SERIES
+        NAME=f'{PID}{SERIES}'
         OUTDIR = f'{outdir}/00m/{PID}{SERIES}/'
         os.makedirs(OUTDIR, exist_ok=True)
         app=APP+'/'+NAME
