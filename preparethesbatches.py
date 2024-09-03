@@ -2,10 +2,11 @@
 import pandas as pd
 import numpy as np
 import os
-def makeSlurm(jobName, job, partition='cpu_short', time='cpu_long', nodes='1', ntasks='1', cpus='2', mem='10G',modules=[]):
-    slurm = open(jobName, 'w')
+def makeSlurm(jobName, job,partition='cpu_short', time='cpu_long', nodes='1', ntasks='1', cpus='2', mem='10G',modules=[]):
+    FN=jobName+ '.sh'
+    slurm = open(FN, 'w')
     slurm.write('#!/bin/bash\n')
-    slurm.write('#SBATCH --job-name=' + jobName + '\n')
+    # slurm.write('#SBATCH --job-name=' + jobName + '\n')
     slurm.write('#SBATCH --output=' + jobName + '.out\n')
     slurm.write('#SBATCH --partition=' + partition + '\n')
     slurm.write('#SBATCH --time=' + time + '\n')
@@ -17,6 +18,7 @@ def makeSlurm(jobName, job, partition='cpu_short', time='cpu_long', nodes='1', n
         slurm.write(f'module load {module}\n')
     slurm.write(f'{job}\n')
     slurm.close()
+    return FN
 
 def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
     file_extension = os.path.splitext(file_path)[1]
@@ -53,8 +55,9 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir):
         '''
         
         job = f'{JOB_DIR}/job_{p["ParticipantID"]}'
-        makeSlurm(f'{job}', cmd, partition='cpu_short', modules=MODULES, time='02:00:00')
-        JOBLIST.append(job)
+        # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
+        fn=makeSlurm(f'{job}', cmd, partition='cpu_short', modules=MODULES, time='02:00:00')
+        JOBLIST.append(fn)
     
     return JOBLIST
 
