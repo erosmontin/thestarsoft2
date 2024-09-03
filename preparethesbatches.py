@@ -33,8 +33,8 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir):
     # Ensure directories exist
     os.makedirs(APP, exist_ok=True,mode=0o775)
     os.makedirs(JOB_DIR, exist_ok=True,mode=0o775)
-    
-    MODULES = ['singularity/3.9.8']
+    MODULES=[]
+    # MODULES = ['singularity/3.9.8']
     JOBLIST = []
     FN = len(df)
     
