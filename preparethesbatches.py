@@ -21,7 +21,7 @@ def makeSlurm(jobName, job,partition='cpu_short', time='cpu_long', nodes='1', nt
     slurm.close()
     return FN
 
-def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir):
+def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir,sif):
     file_extension = os.path.splitext(file_path)[1]
     if file_extension == '.xlsx':
         df = pd.read_excel(file_path)
@@ -76,7 +76,8 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir):
         # '''
 
 
-        cmd = f'''mkdir -p -m 0777 {tmp} && singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp docker://erosmontin/thestarsoft2:singularity /bin/bash -c "cd /app && bash script_sy.sh"'''
+        # cmd = f'''mkdir -p -m 0777 {tmp} && singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp docker://erosmontin/thestarsoft2:singularity /bin/bash -c "cd /app && bash script_sy.sh"'''
+        cmd = f'''mkdir -p -m 0777 {tmp} && singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp {sif} /bin/bash -c "cd /app && bash script_sy.sh"'''
 
         job = f'{JOB_DIR}/job_{PID}_{SERIES}'
         # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
@@ -92,7 +93,8 @@ APP = '/gpfs/home/montie01/tmp/app'
 JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
 OUTDIR = '/gpfs/home/montie01/PROJECTS/T2/OUTDIR'
 TMP='/gpfs/home/montie01/PROJECTS/T2/_TMP'
-JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR,tmpdir=TMP)
+SIF='/gpfs/home/montie01/PROJECTS/T2/sif/thestarsoft2'
+JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR,tmpdir=TMP,SIF=SIF)
 
 for job in JOBLIST:
     os.system(f'sbatch {job}')
