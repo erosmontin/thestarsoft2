@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 import os
+import time
 def makeSlurm(jobName, job,partition='cpu_short', time='cpu_long', nodes='1', ntasks='1', cpus='2', mem='10G',modules=[]):
     FN=jobName+ '.sh'
     slurm = open(FN, 'w')
@@ -50,34 +51,12 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir,sif):
         app=APP+'/'+NAME
         # os.makedirs(app, exist_ok=True)
         tmp=tmpdir+'/'+NAME
-        os.makedirs(tmp, exist_ok=True,mode=0o775)
-        
-        # Command to check files and run Singularity
-        # cmd = f'''
-        # if [ -f "{OUTDIR}/T2_MAPS_EMC.nii.gz" ] && [ -f "{OUTDIR}/T2_MAPS_MONOEXP_WITHOUT_1ST_ECHO.nii.gz" ] && [ -f "{OUTDIR}/T2_MAPS_MONOEXP.nii.gz" ]; then
-        #     singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti -B {DB}:/db -B {APP}:/app docker://erosmontin/thestarsoft2:latest /bin/bash -c "cd /app && bash script.sh VA23_Knee_7ETL_10TE.mat"
-        # else
-        #     echo "Skipping {OUTDIR}, required files not found."
-        # fi
-        # '''
-
-        # cmd = f'''singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti -B {DB}:/db -B {app}:/app docker://erosmontin/thestarsoft2:latest /bin/bash -c "cd /app && bash script.sh VA23_Knee_7ETL_10TE.mat"'''
-
-        # cmd = f'''
-        # mkdir -p -m 0777 {OUTDIR}
-        # mkdir -p -m 0777 {tmp}
-        # mkdir -p -m 0777 {app}
-        # singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti \
-        #         -B {DB}:/db -B {app}:/app \
-        #         -B {tmp}:/tmp \
-        #         docker://erosmontin/thestarsoft2:latest \
-        #         /bin/bash -c "echo \$PWD && cd /app && bash script.sh VA23_Knee_7ETL_10TE.mat"
-        # rm -rf {tmp}
-        # '''
-
-
+        os.makedirs(tmp, exist_ok=True,mode=0o777)
+               # Wait until the directory is created and accessible
+        while not (os.path.exists(tmp) and os.access(tmp, os.W_OK)):
+            time.sleep(1)
         # cmd = f'''mkdir -p -m 0777 {tmp} && singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp docker://erosmontin/thestarsoft2:singularity /bin/bash -c "cd /app && bash script_sy.sh"'''
-        cmd = f'''mkdir -p -m 0777 {tmp} && singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp {sif} /bin/bash -c "cd /app && bash script_sy.sh"'''
+        cmd = f''' singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp {sif} /bin/bash -c "cd /app && bash script_sy.sh"'''
 
         job = f'{JOB_DIR}/job_{PID}_{SERIES}'
         # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
