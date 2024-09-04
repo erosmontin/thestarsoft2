@@ -22,7 +22,7 @@ def main(DICOMDIR,TMPDIR='/tmp',FITPATH='/fit.jl',DB='/db',OUTDIR='/out'):
     
     os.makedirs(DICOMDIR_FAKE, exist_ok=True)
     for file in os.listdir(DICOMDIR):
-        shutil.copy(os.path.join({DICOMDIR}, file), DICOMDIR_FAKE)
+        shutil.copy(os.path.join(DICOMDIR, file), DICOMDIR_FAKE)
 
     # Remove any existing NIfTI and JSON files in /tmp/dicom
     for ext in ['*.nii', '*.json', '*.nii.gz']:
@@ -37,7 +37,7 @@ def main(DICOMDIR,TMPDIR='/tmp',FITPATH='/fit.jl',DB='/db',OUTDIR='/out'):
     print("Moving NIFTI files to /tmp/NIFTI")
     os.makedirs(NIFTIDIR, exist_ok=True)
     for ext in ['*.nii', '*.json']:
-        for file in glob.glob(f'{DICOMDIR_FAKE}/{ext}'):
+        for file in glob.glob(f'DICOMDIR_FAKE/{ext}'):
             shutil.move(file, NIFTIDIR)
 
     # Run Julia script
