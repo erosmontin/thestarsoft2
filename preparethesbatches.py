@@ -85,7 +85,7 @@ TMP='/gpfs/data/denizlab/Users/montie01/T2/_TMP'
 SIF='/gpfs/home/montie01/PROJECTS/T2/sif/thestarsoft2.sif'
 JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR,tmpdir=TMP,sif=SIF)
 
-# for job in JOBLIST:
-#     os.system(f'sbatch {job}')
-#     print(f'sbatch {job}')
-# print('All jobs submitted')
+for job in JOBLIST:
+    os.system(f'sbatch {job}')
+    print(f'sbatch {job}')
+print('All jobs submitted')
