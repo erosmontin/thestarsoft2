@@ -32,6 +32,7 @@ docker run -v /home/eros/Downloads/Example/Example/10424416/:/dcm -v /g/nifti:/n
 pull the image
 ```
  singularity pull --name ~/thestarsoft2.sif docker://erosmontin/thestarsoft2:singularity
+ rm -rf ../_TMP/ ../OUTDIR/ ../JOBS/
 
 ```
 
