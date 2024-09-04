@@ -37,12 +37,11 @@ def main(DICOMDIR,TMPDIR='/tmp',FITPATH='/fit.jl',DB='/db',OUTDIR='/out'):
     print("Moving NIFTI files to /tmp/NIFTI")
     os.makedirs(NIFTIDIR, exist_ok=True)
     for ext in ['*.nii', '*.json']:
-        for file in glob.glob(f'DICOMDIR_FAKE/{ext}'):
+        for file in glob.glob(f'{DICOMDIR_FAKE}/{ext}'):
             shutil.move(file, NIFTIDIR)
 
     # Run Julia script
     print("Running Julia script")
-    os.chdir(PT)
     run_command(f'julia {FITPATH} {NIFTIDIR} {DB} {OUTDIR}')
 
     # Fix geometry
