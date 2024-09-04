@@ -12,7 +12,7 @@ module add julia/1.9.4
 
 FAKE=/gpfs/data/denizlab/Users/montie01/aaa
 rm -rf $FAKE
-DICOM=gpfs/data/denizlab/Datasets/OAI_original/00m/0.C.2/9000296/20040909/10693717
+DICOM=/gpfs/data/denizlab/Datasets/OAI_original/00m/0.C.2/9000296/20040909/10693717
 OUTPUTDIR=/gpfs/data/denizlab/Users/montie01/T2/OUTDIR/00m/9000296SAG_T2_MAP_RIGHT
 APP=/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/OAI_DataProcessing/fittingT2Maps.jl
 
