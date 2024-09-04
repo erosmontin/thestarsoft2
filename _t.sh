@@ -1,4 +1,6 @@
 #!/bin/bash
+#SBATCH --job-name=fittingT2Maps
+#SBATCH --output=fittingT2Maps.out
 #SBATCH --partition=cpu_short
 #SBATCH --time=02:00:00
 #SBATCH --nodes=1
@@ -8,9 +10,9 @@
 module add dcm2niix/20211006
 module add julia/1.9.4
 
-
+rm fittingT2Maps.out
 FAKE=/gpfs/data/denizlab/Users/montie01/aaa/
-
+rm -rf $FAKE
 DICOM=gpfs/data/denizlab/Datasets/OAI_original/00m/0.C.2/9000296/20040909/10693717
 OUTPUTDIR=/gpfs/data/denizlab/Users/montie01/T2/OUTDIR/00m/9000296SAG_T2_MAP_RIGHT
 APP=/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/OAI_DataProcessing/fittingT2Maps.jl
