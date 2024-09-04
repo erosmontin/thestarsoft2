@@ -18,7 +18,7 @@ APP=/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/OAI_DataProcessing/fittingT2Map
 
 FAKE_DICOM=$FAKE/dicom
 FAKE_NIFTI=$FAKE/nifti
-DB= '/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/db/VA23_Knee_7ETL_10TE.mat'
+DB=/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/db/VA23_Knee_7ETL_10TE.mat
 mkdir -p $FAKE_DICOM
 cp $DICOM/* $FAKE_DICOM/
 rm -f $FAKE_DICOM/*.nii
