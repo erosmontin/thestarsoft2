@@ -8,20 +8,30 @@
 module add dcm2niix/20211006
 module add julia/1.9.4
 
-mkdir -p /gpfs/data/denizlab/Users/montie01/aaa/dicom
-cp /gpfs/data/denizlab/Datasets/OAI_original/00m/0.C.2/9000296/20040909/10693717/* /gpfs/data/denizlab/Users/montie01/aaa/dicom/
-rm -f /gpfs/data/denizlab/Users/montie01/aaa/dicom/*.nii
-rm -f /gpfs/data/denizlab/Users/montie01/aaa/dicom/*.json
-rm -f /gpfs/data/denizlab/Users/montie01/aaa/dicom/*.nii.gz
+
+FAKE=/gpfs/data/denizlab/Users/montie01/aaa/
+
+DICOM=gpfs/data/denizlab/Datasets/OAI_original/00m/0.C.2/9000296/20040909/10693717
+OUTPUTDIR=/gpfs/data/denizlab/Users/montie01/T2/OUTDIR/00m/9000296SAG_T2_MAP_RIGHT
+APP=/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/OAI_DataProcessing/fittingT2Maps.jl
+
+FAKE_DICOM=$FAKE/dicom
+FAKE_NIFTI=$FAKE/nifti
+DB= '/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/db/VA23_Knee_7ETL_10TE.mat'
+mkdir -p $FAKE_DICOM
+cp $DICOM/* $FAKE_DICOM/
+rm -f $FAKE_DICOM/*.nii
+rm -f $FAKE_DICOM/*.json
+rm -f $FAKE_DICOM/*.nii.gz
 echo "Converting DICOM to NIFTI"
 
-dcm2niix /gpfs/data/denizlab/Users/montie01/aaa/dicom/ && \
-echo "Moving NIFTI files to /gpfs/data/denizlab/Users/montie01/aaa/nifti" && \
-mkdir -p /gpfs/data/denizlab/Users/montie01/aaa/nifti && \
-mv /gpfs/data/denizlab/Users/montie01/aaa/dicom/*.nii /gpfs/data/denizlab/Users/montie01/aaa/nifti/ && \
-mv /gpfs/data/denizlab/Users/montie01/aaa/dicom/*.json /gpfs/data/denizlab/Users/montie01/aaa/nifti/ && \
+dcm2niix $FAKE_DICOM/ && \
+echo "Moving NIFTI files to $FAKE_NIFTI" && \
+mkdir -p $FAKE_NIFTI && \
+mv $FAKE_DICOM/*.nii  && \
+mv $FAKE_DICOM/*.json $FAKE_NIFTI/ && \
 echo "Running Julia script"
 
 
-julia /gpfs/home/montie01/PROJECTS/T2/thestarsoft2/OAI_DataProcessing/fittingT2Maps.jl /gpfs/home/montie01/PROJECTS/T2/thestarsoft2/db/VA23_Knee_7ETL_10TE.mat /data/denizlab/Users/montie01/T2/OUTDIR/00m/9000296SAG_T2_MAP_RIGHT 
-python fix_geometry.py /gpfs/data/denizlab/Users/montie01/aaa/nifti/ /data/denizlab/Users/montie01//T2/OUTDIR/00m/9000296SAG_T2_MAP_RIGHT
+julia $APP $FAKE_NIFTI $DB $OUTPUTDIR 
+python fix_geometry.py $FAKE_NIFTI $OUTPUTDIR
