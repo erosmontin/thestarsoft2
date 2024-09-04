@@ -19,16 +19,22 @@ APP=/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/OAI_DataProcessing/fittingT2Map
 FAKE_DICOM=$FAKE/dicom
 FAKE_NIFTI=$FAKE/nifti
 _DB=/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/db/VA23_Knee_7ETL_10TE.mat
+
 mkdir -p $FAKE_DICOM
+mkdir -p $FAKE_NIFTI 
+
+echo "Copying DICOM files to $FAKE_DICOM"
 cp $DICOM/* $FAKE_DICOM/
+
 rm -f $FAKE_DICOM/*.nii
 rm -f $FAKE_DICOM/*.json
 rm -f $FAKE_DICOM/*.nii.gz
+
 echo "Converting DICOM to NIFTI"
 
 dcm2niix $FAKE_DICOM/ && \
-echo "Moving NIFTI files to $FAKE_NIFTI" && \
-mkdir -p $FAKE_NIFTI && \
+
+echo "Moving NIFTI files to $FAKE_NIFTI" 
 mv $FAKE_DICOM/*.nii  && \
 mv $FAKE_DICOM/*.json $FAKE_NIFTI/ && \
 echo "Running Julia script"
