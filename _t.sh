@@ -15,11 +15,11 @@ rm -f /gpfs/data/denizlab/Users/montie01/aaa/dicom*.json
 rm -f /gpfs/data/denizlab/Users/montie01/aaa/dicom*.nii.gz
 echo "Converting DICOM to NIFTI"
 
-dcm2niix /gpfs/data/denizlab/Users/montie01/aaa/dicom && \
+dcm2niix /gpfs/data/denizlab/Users/montie01/aaa/dicom/ && \
 echo "Moving NIFTI files to /gpfs/data/denizlab/Users/montie01/aaa/nifti" && \
 mkdir -p /gpfs/data/denizlab/Users/montie01/aaa/nifti && \
-mv /gpfs/data/denizlab/Users/montie01/aaa//dicom*.nii /gpfs/data/denizlab/Users/montie01/aaa/nifti/ && \
-mv /gpfs/data/denizlab/Users/montie01/aaa//dicom*.json /gpfs/data/denizlab/Users/montie01/aaa/nifti/ && \
+mv /gpfs/data/denizlab/Users/montie01/aaa/dicom*.nii /gpfs/data/denizlab/Users/montie01/aaa/nifti/ && \
+mv /gpfs/data/denizlab/Users/montie01/aaa/dicom*.json /gpfs/data/denizlab/Users/montie01/aaa/nifti/ && \
 echo "Running Julia script" && \
 
 julia  /gpfs/home/montie01/PROJECTS/T2/thestarsoft2/OAI_DataProcessing/fittingT2Maps.jl /gpfs/data/denizlab/Users/montie01/aaa/nifti/ /app/db/VA23_Knee_7ETL_10TE.mat /nifti/ && \
