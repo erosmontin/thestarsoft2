@@ -39,6 +39,8 @@ def main(DICOMDIR,TMPDIR='/tmp',FITPATH='/fit.jl',DB='/db',OUTDIR='/out'):
     for ext in ['*.nii', '*.json']:
         for file in glob.glob(f'{DICOMDIR_FAKE}/{ext}'):
             shutil.move(file, NIFTIDIR)
+            print(f"Moved {file} to {NIFTIDIR}")
+    
 
     # Run Julia script
     print("Running Julia script")
