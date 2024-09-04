@@ -73,7 +73,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir,sif):
 # Example usage
 file_path = 'debug.csv'
 DB = '/gpfs/home/montie01/PROJECTS/OAI/'
-APP = '/gpfs/home/montie01/tmp/app'
+APP = '/gpfs/home/montie01/PROJECTS/T2/thestarsoft2'
 JOB_DIR = '/gpfs/data/denizlab/Users/montie01/T2/JOBS'
 try:
     os.rmdir(JOB_DIR)
