@@ -74,7 +74,8 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir,sif):
 file_path = 'debug.csv'
 DB = '/gpfs/home/montie01/PROJECTS/OAI/'
 APP = '/gpfs/home/montie01/tmp/app'
-JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
+JOB_DIR = '/gpfs/data/denizlab/Users/montie01/T2/JOBS'
+os.rmdir(JOB_DIR)
 OUTDIR = '/gpfs/data/denizlab/Users/montie01//T2/OUTDIR'
 TMP='/gpfs/data/denizlab/Users/montie01/T2/_TMP'
 SIF='/gpfs/home/montie01/PROJECTS/T2/sif/thestarsoft2.sif'
