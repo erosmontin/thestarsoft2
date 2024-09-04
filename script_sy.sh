@@ -24,6 +24,6 @@ mv /tmp/dicom/*.nii /tmp/NIFTI/ && \
 mv /tmp/dicom/*.json /tmp/NIFTI/ && \
 echo "Running Julia script" && \
 cd $PT && \
-julia /app/fittingT2Maps.jl /tmp/NIFTI/ /app/db/VA23_Knee_7ETL_10TE.mat /nifti/ && \
+julia OAI_DataProcessing/fittingT2Maps.jl /tmp/NIFTI/ /app/db/VA23_Knee_7ETL_10TE.mat /nifti/ && \
 echo "Fixing geometry" && \
 python fix_geometry.py /tmp/NIFTI/ /nifti/
