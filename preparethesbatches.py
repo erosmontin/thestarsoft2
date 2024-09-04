@@ -48,9 +48,8 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir,sif):
         PID=p['ParticipantID']
         NAME=f'{PID}{SERIES}'
         OUTDIR = f'{outdir}/00m/{PID}{SERIES}/'
-        app=f'{APP}/{PID}{SERIES}'
         os.makedirs(OUTDIR, exist_ok=True)
-        os.makedirs(app, exist_ok=True)
+        # os.makedirs(app, exist_ok=True)
         tmp=tmpdir+'/'+NAME
         os.makedirs(tmp, exist_ok=True,mode=0o777)
                # Wait until the directory is created and accessible
@@ -62,7 +61,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir,sif):
             print(f'No files in {DCM}')
             continue
         # cmd = f'''mkdir -p -m 0777 {tmp} && singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp docker://erosmontin/thestarsoft2:singularity /bin/bash -c "cd /app && bash script_sy.sh"'''
-        cmd = f''' singularity exec -B {DCM}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp  -B {app}:/app {sif} /bin/bash -c "cd /app && bash script_sy.sh && rm -rf /tmp/dicom && rm -rf /tmp/NIFTI"'''
+        cmd = f''' singularity exec -B {DCM}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp {sif} /bin/bash -c "cd /app && bash script_sy.sh && rm -rf /tmp/dicom && rm -rf /tmp/NIFTI"'''
 
         job = f'{JOB_DIR}/job_{PID}_{SERIES}'
         # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
