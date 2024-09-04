@@ -72,7 +72,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, TMP,JOB_DIR,outdir):
 
     # Ensure directories exist
     FN = len(df)
-    
+    JOBLIST = []
     for a in range(0, FN):
         p = df.iloc[a]
         # Specify the path to the output directory
