@@ -57,7 +57,7 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir,sif):
             time.sleep(1)
 
         DCM=f'/gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}'
-        if len(glob.glob(f'{DCM}/*'))>90:
+        if len(glob.glob(f'{DCM}/*'))<90:
             print(f'No files in {DCM}')
             continue
         # cmd = f'''mkdir -p -m 0777 {tmp} && singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp docker://erosmontin/thestarsoft2:singularity /bin/bash -c "cd /app && bash script_sy.sh"'''
