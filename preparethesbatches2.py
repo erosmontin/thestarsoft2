@@ -3,15 +3,17 @@ import shutil
 import subprocess
 import glob
 import argparse
+import subprocess
+
 def run_command(command):
     """Run a shell command and check for errors."""
-    result = subprocess.run(command, shell=True, text=True, capture_output=True)
-    if result.returncode != 0:
-        print(f"Error running command: {command}")
-        print(result.stderr)
-        raise Exception(f"Command failed: {command}")
-    else:
+    try:
+        result = subprocess.run(command, shell=True, text=True, capture_output=True, check=True)
         print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running command: {command}")
+        print(e.stderr)
+        raise Exception(f"Command failed: {command}")
 
 def main(DICOMDIR,TMPDIR='/tmp',FITPATH='/fit.jl',DB='/db',OUTDIR='/out'):
     # Set the current working directory
