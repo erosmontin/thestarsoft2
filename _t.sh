@@ -22,5 +22,5 @@ mv /gpfs/data/denizlab/Users/montie01/aaa/dicom/*.nii /gpfs/data/denizlab/Users/
 mv /gpfs/data/denizlab/Users/montie01/aaa/dicom/*.json /gpfs/data/denizlab/Users/montie01/aaa/nifti/ && \
 echo "Running Julia script"
 
-julia  /gpfs/home/montie01/PROJECTS/T2/thestarsoft2/OAI_DataProcessing/fittingT2Maps.jl /gpfs/home/montie01/PROJECTS/T2/thestarsoft2/db/VA23_Knee_7ETL_10TE.mat /data/denizlab/Users/montie01//T2/OUTDIR/00m/9000296SAG_T2_MAP_RIGHT && \
+julia  -e '/gpfs/home/montie01/PROJECTS/T2/thestarsoft2/OAI_DataProcessing/fittingT2Maps.jl /gpfs/home/montie01/PROJECTS/T2/thestarsoft2/db/VA23_Knee_7ETL_10TE.mat /data/denizlab/Users/montie01//T2/OUTDIR/00m/9000296SAG_T2_MAP_RIGHT' && \
 python fix_geometry.py /gpfs/data/denizlab/Users/montie01/aaa/nifti/ /data/denizlab/Users/montie01//T2/OUTDIR/00m/9000296SAG_T2_MAP_RIGHT
