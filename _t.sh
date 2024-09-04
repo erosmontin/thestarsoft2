@@ -10,7 +10,7 @@
 module add dcm2niix/20211006
 module add julia/1.9.4
 
-FAKE=/gpfs/data/denizlab/Users/montie01/aaa/
+FAKE=/gpfs/data/denizlab/Users/montie01/aaa
 rm -rf $FAKE
 DICOM=gpfs/data/denizlab/Datasets/OAI_original/00m/0.C.2/9000296/20040909/10693717
 OUTPUTDIR=/gpfs/data/denizlab/Users/montie01/T2/OUTDIR/00m/9000296SAG_T2_MAP_RIGHT
@@ -33,7 +33,7 @@ mv $FAKE_DICOM/*.nii  && \
 mv $FAKE_DICOM/*.json $FAKE_NIFTI/ && \
 echo "Running Julia script"
 
-echo julia $APP $FAKE_NIFTI $DB $OUTPUTDIR 
+echo julia $APP $FAKE_NIFTI $_DB $OUTPUTDIR 
 
 julia $APP $FAKE_NIFTI $_DB $OUTPUTDIR 
 python fix_geometry.py $FAKE_NIFTI $OUTPUTDIR
