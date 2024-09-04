@@ -10,7 +10,6 @@
 module add dcm2niix/20211006
 module add julia/1.9.4
 
-rm fittingT2Maps.out
 FAKE=/gpfs/data/denizlab/Users/montie01/aaa/
 rm -rf $FAKE
 DICOM=gpfs/data/denizlab/Datasets/OAI_original/00m/0.C.2/9000296/20040909/10693717
