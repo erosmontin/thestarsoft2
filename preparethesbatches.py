@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 import time
+import glob
 def makeSlurm(jobName, job,partition='cpu_short', time='cpu_long', nodes='1', ntasks='1', cpus='2', mem='10G',modules=[]):
     FN=jobName+ '.sh'
     slurm = open(FN, 'w')
@@ -55,8 +56,12 @@ def prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir,tmpdir,sif):
         while not (os.path.exists(tmp) and os.access(tmp, os.W_OK)):
             time.sleep(1)
 
+        DCM=f'/gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}'
+        if len(glob.glob(f'{DCM}/*'))>90:
+            print(f'No files in {DCM}')
+            continue
         # cmd = f'''mkdir -p -m 0777 {tmp} && singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp docker://erosmontin/thestarsoft2:singularity /bin/bash -c "cd /app && bash script_sy.sh"'''
-        cmd = f''' singularity exec -B /gpfs/data/denizlab/Datasets/OAI_original/00m/{p["Folder"]}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp {sif} /bin/bash -c "cd /app && bash script_sy.sh" && rm -rf {tmp}'''
+        cmd = f''' singularity exec -B {DCM}:/dcm -B {OUTDIR}:/nifti  -B {tmp}:/tmp {sif} /bin/bash -c "cd /app && bash script_sy.sh" && rm -rf {tmp}'''
 
         job = f'{JOB_DIR}/job_{PID}_{SERIES}'
         # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
@@ -70,12 +75,12 @@ file_path = 'debug.csv'
 DB = '/gpfs/home/montie01/PROJECTS/OAI/'
 APP = '/gpfs/home/montie01/tmp/app'
 JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
-OUTDIR = '/gpfs/home/montie01/PROJECTS/T2/OUTDIR'
-TMP='/gpfs/home/montie01/PROJECTS/T2/_TMP'
+OUTDIR = '/gpfs/data/denizlab/Users/montie01//T2/OUTDIR'
+TMP='/gpfs/data/denizlab/Users/montie01/T2/_TMP'
 SIF='/gpfs/home/montie01/PROJECTS/T2/sif/thestarsoft2.sif'
 JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR,tmpdir=TMP,sif=SIF)
 
-for job in JOBLIST:
-    os.system(f'sbatch {job}')
-    print(f'sbatch {job}')
-print('All jobs submitted')
+# for job in JOBLIST:
+#     os.system(f'sbatch {job}')
+#     print(f'sbatch {job}')
+# print('All jobs submitted')
