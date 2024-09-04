@@ -72,7 +72,7 @@ APP = '/gpfs/home/montie01/tmp/app'
 JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
 OUTDIR = '/gpfs/home/montie01/PROJECTS/T2/OUTDIR'
 TMP='/gpfs/home/montie01/PROJECTS/T2/_TMP'
-SIF='/gpfs/home/montie01/PROJECTS/T2/sif/thestarsoft2'
+SIF='/gpfs/home/montie01/PROJECTS/T2/sif/thestarsoft2.sif'
 JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR,tmpdir=TMP,sif=SIF)
 
 for job in JOBLIST:
