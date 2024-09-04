@@ -94,7 +94,7 @@ JOB_DIR = '/gpfs/home/montie01/PROJECTS/T2/JOBS'
 OUTDIR = '/gpfs/home/montie01/PROJECTS/T2/OUTDIR'
 TMP='/gpfs/home/montie01/PROJECTS/T2/_TMP'
 SIF='/gpfs/home/montie01/PROJECTS/T2/sif/thestarsoft2'
-JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR,tmpdir=TMP,SIF=SIF)
+JOBLIST = prepare_and_submit_jobs(file_path, DB, APP, JOB_DIR,outdir=OUTDIR,tmpdir=TMP,sif=SIF)
 
 for job in JOBLIST:
     os.system(f'sbatch {job}')
