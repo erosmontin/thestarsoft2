@@ -44,13 +44,7 @@ def main(DICOMDIR,TMPDIR='/tmp',FITPATH='/fit.jl',DB='/db',OUTDIR='/out'):
             print(f"Moved {file} to {NIFTIDIR}")
     
 
-    # Run Julia script
-    print("Running Julia script")
-    run_command(f'julia {FITPATH} {NIFTIDIR} {DB} {OUTDIR}')
-
-    # Fix geometry
-    print("Fixing geometry")
-    run_command(f'python fix_geometry.py {NIFTIDIR} {OUTDIR}')
+ 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process DICOM files and convert them to NIFTI.')
