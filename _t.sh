@@ -33,7 +33,7 @@ mv $FAKE_DICOM/*.nii  && \
 mv $FAKE_DICOM/*.json $FAKE_NIFTI/ && \
 echo "Running Julia script"
 
-echo julia $APP $FAKE_NIFTI $_DB $OUTPUTDIR 
+echo julia $APP $FAKE_NIFTI/ $_DB $OUTPUTDIR/ 
 
-julia $APP $FAKE_NIFTI $_DB $OUTPUTDIR 
-python fix_geometry.py $FAKE_NIFTI $OUTPUTDIR
+julia $APP $FAKE_NIFTI/ $_DB $OUTPUTDIR/ 
+python fix_geometry.py $FAKE_NIFTI/ $OUTPUTDIR/
