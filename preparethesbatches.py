@@ -75,7 +75,11 @@ file_path = 'debug.csv'
 DB = '/gpfs/home/montie01/PROJECTS/OAI/'
 APP = '/gpfs/home/montie01/tmp/app'
 JOB_DIR = '/gpfs/data/denizlab/Users/montie01/T2/JOBS'
-os.rmdir(JOB_DIR)
+try:
+    os.rmdir(JOB_DIR)
+except:
+    pass
+
 OUTDIR = '/gpfs/data/denizlab/Users/montie01//T2/OUTDIR'
 TMP='/gpfs/data/denizlab/Users/montie01/T2/_TMP'
 SIF='/gpfs/home/montie01/PROJECTS/T2/sif/thestarsoft2.sif'
