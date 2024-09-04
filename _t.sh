@@ -35,8 +35,9 @@ echo "Converting DICOM to NIFTI"
 dcm2niix $FAKE_DICOM/ && \
 
 echo "Moving NIFTI files to $FAKE_NIFTI" 
-mv $FAKE_DICOM/*.nii  && \
-mv $FAKE_DICOM/*.json $FAKE_NIFTI/ && \
+mv $FAKE_DICOM/*.nii  $FAKE_NIFTI/ 
+mv $FAKE_DICOM/*.json $FAKE_NIFTI/ 
+
 echo "Running Julia script"
 
 echo julia $APP $FAKE_NIFTI/ $_DB $OUTPUTDIR/ 
