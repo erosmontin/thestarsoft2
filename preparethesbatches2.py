@@ -56,7 +56,10 @@ def makeSlurm(jobName, dicomdir,tmp,app,outputdir,db, partition='cpu_short', tim
     slurm.write('echo julia $APP $FAKE_NIFTI/ $_DB $OUTPUTDIR/\n\n')
     
     slurm.write('julia $APP $FAKE_NIFTI/ $_DB $OUTPUTDIR/\n')
+    slurm.write('echo "Fixing geometry"\n')
     slurm.write('python fix_geometry.py $FAKE_NIFTI/ $OUTPUTDIR/\n')
+    slurm.write('cleaning up\n')
+    slurm.write('rm -rf $FAKE\n')
     
     slurm.close()
     return FN
@@ -89,7 +92,11 @@ def prepare_and_submit_jobs(file_path, DB, APP, TMP,JOB_DIR,outdir):
             print(f'No files in {dicom}')
             continue
         job = f'{JOB_DIR}/job_{PID}_{SERIES}'
-        # out= f'{OUTDIR}/job_{p["ParticipantID"]}.out'
+        
+        if len(glob.glob(f'{OUTDIR}/*'))==3:
+            print(f'Already daclulated {OUTDIR}')
+            continue
+        
         fn=makeSlurm(f'{job}', dicom,tmp,APP,OUTDIR,DB,partition='cpu_short', time='02:00:00', nodes='1', ntasks='1', cpus='2', mem='10G')
         JOBLIST.append(fn)
     
