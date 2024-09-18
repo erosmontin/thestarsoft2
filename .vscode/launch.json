@@ -1,0 +1,48 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Directories input",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["-l","/data/MYDATA/fulldixon-images/C-3/data/roi.nii.gz","-i","/data/MYDATA/fulldixon-images/C-3/data","-o","/g/a.json"]
+        },
+        {
+            "name": "multiple input",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["-l","/data/MYDATA/fulldixon-images/C-3/data/roi.nii.gz","-m","/data/MYDATA/fulldixon-images/C-3/data/wo.nii","/data/MYDATA/fulldixon-images/C-3/data/fo.nii","-o","/g/a2.json"]
+        },
+        {
+            "name": "multiple input and roi value",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["-l","/data/MYDATA/fulldixon-images/C-3/data/roi.nii.gz","-m","/data/MYDATA/fulldixon-images/C-3/data/wo.nii","/data/MYDATA/fulldixon-images/C-3/data/fo.nii","-o","/g/a2.json","-r","0","1"]
+        },
+        {
+            "name": "multiple input and roi value plot",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["-l","/data/MYDATA/fulldixon-images/C-3/data/roi.nii.gz","-m","/data/MYDATA/fulldixon-images/C-3/data/wo.nii","/data/MYDATA/fulldixon-images/C-3/data/fo.nii","-o","/g/a2.json","-r","1","2","-p","-s","/data/MYDATA/fulldixon-images/C-3/data/IN.nii"]
+        },
+        {
+            "name": "P",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["-l","/g/T/9000622_RIGHT_0.nii.gz","-i","/g/T/T2","-o","/g/TESTT/a2.json","-p","-s","/g/T/DESS/9000622_00m_RIGHT_SAG_3D_DESS_WE.nii.gz"]
+        }
+    ]
+}
