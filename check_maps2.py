@@ -4,7 +4,7 @@ import datetime
 import platform
 import os
 import numpy as np
-parser = argparse.ArgumentParser(description='Chec Directories')
+parser = argparse.ArgumentParser(description='Check Directories')
 
 from pynico_eros_montin.pynico import checkDirEndsWithSlash, getPlatformInfo
 
