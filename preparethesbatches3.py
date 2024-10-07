@@ -57,8 +57,8 @@ def makeSlurm(jobName, dicomdir,tmp,app,outputdir,db, partition='cpu_short', tim
     
     slurm.write('julia $APP $FAKE_NIFTI/ $_DB $OUTPUTDIR/\n')
     slurm.write('echo "Fixing geometry"\n')
-    slurm.write(f'python check_echoes.py $FAKE_NIFTI/ $OUTPUTDIR/\n\n')
     slurm.write('python fix_geometry.py $FAKE_NIFTI/ $OUTPUTDIR/\n')
+    slurm.write(f'python check_echoes.py $FAKE_NIFTI/ $OUTPUTDIR/\n\n')
     slurm.write('cleaning up\n')
     slurm.write('rm -rf $FAKE\n')
     
